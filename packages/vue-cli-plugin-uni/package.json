@@ -33,5 +33,5 @@
     "webpack-merge": "^4.1.4",
     "wrap-loader": "^0.2.0",
     "xregexp": "4.0.0"
-  },
+  }
 }
