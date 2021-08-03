@@ -7,7 +7,7 @@ function b64DecodeUnicode (str) {
 }
 
 function getCurrentUserInfo () {
-  const token = ( swan).getStorageSync('uni_id_token') || '';
+  const token = (swan).getStorageSync('uni_id_token') || '';
   const tokenArr = token.split('.');
   if (!token || tokenArr.length !== 3) {
     return {
@@ -480,7 +480,7 @@ const eventChannelStack = [];
 
 let id = 0;
 
-function initEventChannel (events, cache = true) {
+function initEventChannel$1 (events, cache = true) {
   id++;
   const eventChannel = new EventChannel(id, events);
   if (cache) {
@@ -501,7 +501,7 @@ function getEventChannel (id) {
 
 var navigateTo = {
   args (fromArgs, toArgs) {
-    const id = initEventChannel(fromArgs.events).id;
+    const id = initEventChannel$1(fromArgs.events).id;
     if (fromArgs.url) {
       fromArgs.url = fromArgs.url + (fromArgs.url.indexOf('?') === -1 ? '?' : '&') + '__id__=' + id;
     }
@@ -794,7 +794,7 @@ function processReturnValue (methodName, res, returnValue, keepReturnValue = fal
   return processArgs(methodName, res, returnValue, {}, keepReturnValue)
 }
 
-function wrapper (methodName, method) {
+function wrapper$1 (methodName, method) {
   if (hasOwn(protocols, methodName)) {
     const protocol = protocols[methodName];
     if (!protocol) { // 暂不支持的 api
@@ -1367,7 +1367,7 @@ function initProperties (props, isBehavior = false, file = '') {
   return properties
 }
 
-function wrapper$1 (event) {
+function wrapper (event) {
   // TODO 又得兼容 mpvue 的 mp 对象
   try {
     event.mp = JSON.parse(JSON.stringify(event));
@@ -1570,7 +1570,7 @@ function getContextVm (vm) {
 }
 
 function handleEvent (event) {
-  event = wrapper$1(event);
+  event = wrapper(event);
 
   // [['tap',[['handle',[1,2,a]],['handle1',[1,2,a]]]]]
   const dataset = (event.currentTarget || event.target).dataset;
@@ -1655,7 +1655,7 @@ function handleEvent (event) {
   }
 }
 
-const hooks = [
+const hooks$1 = [
   'onShow',
   'onHide',
   'onError',
@@ -1664,7 +1664,7 @@ const hooks = [
   'onUnhandledRejection'
 ];
 
-function initEventChannel$1 () {
+function initEventChannel () {
   Vue.prototype.getOpenerEventChannel = function () {
     if (!this.__eventChannel__) {
       this.__eventChannel__ = new EventChannel();
@@ -1737,7 +1737,7 @@ function parseBaseApp (vm, {
   mocks,
   initRefs
 }) {
-  initEventChannel$1();
+  initEventChannel();
   {
     initScopedSlotsParams();
   }
@@ -1811,7 +1811,7 @@ function parseBaseApp (vm, {
     });
   }
 
-  initHooks(appOptions, hooks);
+  initHooks(appOptions, hooks$1);
 
   return appOptions
 }
@@ -2139,13 +2139,13 @@ function parseComponent (vueOptions) {
   return componentOptions
 }
 
-const hooks$1 = [
+const hooks = [
   'onShow',
   'onHide',
   'onUnload'
 ];
 
-hooks$1.push(...PAGE_EVENT_HOOKS);
+hooks.push(...PAGE_EVENT_HOOKS);
 
 function parseBasePage (vuePageOptions, {
   isPage,
@@ -2153,7 +2153,7 @@ function parseBasePage (vuePageOptions, {
 }) {
   const pageOptions = parseComponent(vuePageOptions);
 
-  initHooks(pageOptions.methods, hooks$1, vuePageOptions);
+  initHooks(pageOptions.methods, hooks, vuePageOptions);
 
   pageOptions.methods.onLoad = function (query) {
     this.options = query;
@@ -2188,6 +2188,11 @@ function parsePage (vuePageOptions) {
     isPage,
     initRelation
   });
+
+  // 支持baidu的tabs
+  pageOptions.methods.onTabChange = function onTabChange(event) {
+    this.$vm.activeName = event.detail.name;
+  };
 
   // 纠正百度小程序生命周期methods:onShow在methods:onLoad之前触发的问题
   pageOptions.methods.onShow = function onShow () {
@@ -2327,7 +2332,7 @@ if (typeof Proxy !== 'undefined' && "mp-baidu" !== 'app-plus') {
       if (!hasOwn(swan, name) && !hasOwn(protocols, name)) {
         return
       }
-      return promisify(name, wrapper(name, swan[name]))
+      return promisify(name, wrapper$1(name, swan[name]))
     },
     set (target, name, value) {
       target[name] = value;
@@ -2358,7 +2363,7 @@ if (typeof Proxy !== 'undefined' && "mp-baidu" !== 'app-plus') {
 
   Object.keys(swan).forEach(name => {
     if (hasOwn(swan, name) || hasOwn(protocols, name)) {
-      uni[name] = promisify(name, wrapper(name, swan[name]));
+      uni[name] = promisify(name, wrapper$1(name, swan[name]));
     }
   });
 }
@@ -2371,5 +2376,4 @@ swan.createPlugin = createPlugin;
 
 var uni$1 = uni;
 
-export default uni$1;
-export { createApp, createComponent, createPage, createPlugin, createSubpackageApp };
+export { createApp, createComponent, createPage, createPlugin, createSubpackageApp, uni$1 as default };

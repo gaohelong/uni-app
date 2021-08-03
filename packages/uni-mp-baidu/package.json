@@ -1,21 +1,16 @@
 {
-  "name": "@dcloudio/uni-mp-baidu",
-  "version": "2.0.0-31920210709003",
-  "description": "uni-app mp-baidu",
+  "name": "hl-mp-baidu",
+  "version": "2.0.0-31920210709003-01",
+  "description": "hl-mp-baidu",
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dcloudio/uni-app.git",
+    "url": "git+https://github.com/gaohelong/uni-app.git",
     "directory": "packages/uni-mp-baidu"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "fxy060608",
-  "license": "Apache-2.0",
-  "uni-app": {
-    "name": "mp-baidu",
-    "title": "百度小程序"
-  },
-  "gitHead": "2033cd540cff5d8469ff77e87779cd4daa5c9121"
+  "author": "hl",
+  "license": "Apache-2.0"
 }
