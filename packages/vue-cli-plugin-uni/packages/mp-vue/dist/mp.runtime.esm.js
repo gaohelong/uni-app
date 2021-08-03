@@ -5869,6 +5869,13 @@ function internalMixin(Vue) {
     var handlers = vm.$options[hook];
     var info = hook + " hook";
     var ret;
+
+    // 百度tabs
+    if (hook == 'onTabChange') {
+      handlers = [];
+      handlers.push(vm.$options[hook]);
+    }
+
     if (handlers) {
       for (var i = 0, j = handlers.length; i < j; i++) {
         ret = invokeWithErrorHandling(handlers[i], vm, args ? [args] : null, vm, info);
