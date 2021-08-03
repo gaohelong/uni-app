@@ -2192,6 +2192,7 @@ function parsePage (vuePageOptions) {
   // 支持baidu的tabs
   pageOptions.methods.onTabChange = function onTabChange(event) {
     this.$vm.activeName = event.detail.name;
+    this.$vm.__call_hook('onTabChange');
   };
 
   // 纠正百度小程序生命周期methods:onShow在methods:onLoad之前触发的问题

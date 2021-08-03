@@ -1,6 +1,6 @@
 {
   "name": "hl-mp-baidu",
-  "version": "2.0.0-31920210709003-01",
+  "version": "2.0.0-31920210709003-02",
   "description": "hl-mp-baidu",
   "main": "dist/index.js",
   "repository": {
